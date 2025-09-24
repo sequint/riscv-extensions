@@ -1,0 +1,34 @@
+diff --git a/riscv/encoding.h b/riscv/encoding.h
+index 13cbcf03..c0ae2397 100644
+--- a/riscv/encoding.h
++++ b/riscv/encoding.h
+@@ -2496,6 +2496,9 @@
+ #define MASK_XPERM4 0xfe00707f
+ #define MATCH_XPERM8 0x28004033
+ #define MASK_XPERM8 0xfe00707f
++/* Custom absolute value instruction */
++#define MATCH_ABS 0x200006b
++#define MASK_ABS 0xfe00707f
+ 
+ #define CSR_FFLAGS 0x1
+ #define CSR_FRM 0x2
+@@ -4065,6 +4068,7 @@ DECLARE_INSN(xperm16, MATCH_XPERM16, MASK_XPERM16)
+ DECLARE_INSN(xperm32, MATCH_XPERM32, MASK_XPERM32)
+ DECLARE_INSN(xperm4, MATCH_XPERM4, MASK_XPERM4)
+ DECLARE_INSN(xperm8, MATCH_XPERM8, MASK_XPERM8)
++DECLARE_INSN(abs, MATCH_ABS, MASK_ABS)
+ #endif
+ #ifdef DECLARE_CSR
+ DECLARE_CSR(fflags, CSR_FFLAGS)
+diff --git a/riscv/riscv.mk.in b/riscv/riscv.mk.in
+index b7f83447..298ca9cf 100644
+--- a/riscv/riscv.mk.in
++++ b/riscv/riscv.mk.in
+@@ -1150,6 +1150,7 @@ riscv_insn_list = \
+ 	$(riscv_insn_ext_zcmop) \
+ 	$(riscv_insn_ext_zicfilp) \
+ 	$(riscv_insn_ext_zicfiss) \
++	abs \
+ 
+ riscv_gen_srcs = $(addsuffix .cc,$(riscv_insn_list))
+ 

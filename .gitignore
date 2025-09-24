@@ -1,1 +1,4 @@
-/abs
+abs/tests/asm/abs_test.elf
+abs/tests/asm/abs_test.o
+abs/tests/cpp/abs_cpp_test.elf
+abs/tests/c/abs_c_test.elf

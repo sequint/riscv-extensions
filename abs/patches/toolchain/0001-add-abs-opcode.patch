@@ -1,0 +1,37 @@
+diff --git a/binutils/include/opcode/riscv-opc.h b/binutils/include/opcode/riscv-opc.h
+index 1c649628..0fc11985 100644
+--- a/binutils/include/opcode/riscv-opc.h
++++ b/binutils/include/opcode/riscv-opc.h
+@@ -3823,6 +3823,9 @@
+ #define MASK_MIPS_PAUSE  0xffffffff
+ #define MATCH_MIPS_PREF 0x0000000b
+ #define MASK_MIPS_PREF 0xe000707f
++/* Custom absolute value instruction */
++#define MATCH_ABS 0x200006b
++#define MASK_ABS 0xfe00707f
+ /* Unprivileged Counter/Timers CSR addresses.  */
+ #define CSR_CYCLE 0xc00
+ #define CSR_TIME 0xc01
+@@ -4978,6 +4981,8 @@ DECLARE_INSN(mips_ehb, MATCH_MIPS_EHB, MASK_MIPS_EHB)
+ DECLARE_INSN(mips_ihb, MATCH_MIPS_IHB, MASK_MIPS_IHB)
+ DECLARE_INSN(mips_pause, MATCH_MIPS_PAUSE, MASK_MIPS_PAUSE)
+ DECLARE_INSN(mips_pref, MATCH_MIPS_PREF, MASK_MIPS_PREF)
++/* Custom absolute value instruction */
++DECLARE_INSN(abs, MATCH_ABS, MASK_ABS)
+ #endif /* DECLARE_INSN */
+ #ifdef DECLARE_CSR
+ /* Unprivileged Counter/Timers CSRs.  */
+diff --git a/binutils/opcodes/riscv-opc.c b/binutils/opcodes/riscv-opc.c
+index 56ef62a6..fc4ac650 100644
+--- a/binutils/opcodes/riscv-opc.c
++++ b/binutils/opcodes/riscv-opc.c
+@@ -3587,6 +3587,9 @@ const struct riscv_opcode riscv_opcodes[] =
+ {"mips.sdp", 0, INSN_CLASS_XMIPSLSP, "t,r,Xm^(s)", MATCH_MIPS_SDP, MASK_MIPS_SDP, match_opcode, 0 },
+ {"mips.swp", 0, INSN_CLASS_XMIPSLSP, "t,r,Xm&(s)", MATCH_MIPS_SWP, MASK_MIPS_SWP, match_opcode, 0 },
+ 
++/* Custom absolute value instruction */
++{"abs", 0, INSN_CLASS_I, "d,s,t", MATCH_ABS, MASK_ABS, match_opcode, 0}
++
+ /* Terminate the list.  */
+ {0, 0, INSN_CLASS_NONE, 0, 0, 0, 0, 0}
+ };
